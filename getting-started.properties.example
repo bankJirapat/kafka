@@ -1,1 +1,8 @@
-bootstrap.servers=localhost:9092
+bootstrap.servers=
+security.protocol=SASL_SSL
+sasl.mechanisms=PLAIN
+sasl.username=< CLUSTER API KEY >
+sasl.password=< CLUSTER API SECRET >
+
+# Best practice for higher availability in librdkafka clients prior to 1.7
+session.timeout.ms=45000

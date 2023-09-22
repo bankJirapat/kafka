@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+import "google/protobuf/timestamp.proto";
+
+package types_data;
+option go_package = "./test_data";
+// option go_package = "./types_data";
+
+message TestData {
+    string id = 1;
+    string topic = 2;
+    string key = 3;
+    string value = 4;
+    google.protobuf.Timestamp time = 5;
+}

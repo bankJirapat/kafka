@@ -1,24 +1,34 @@
 ---
 version: "3"
 services:
-  broker:
-    image: confluentinc/cp-kafka:7.5.0
-    container_name: broker
+  # broker:
+  #   image: confluentinc/cp-kafka:7.5.0
+  #   container_name: broker
+  #   ports:
+  #     - "9092:9092"
+  #   environment:
+  #     KAFKA_BROKER_ID: 1
+  #     KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+  #     KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
+  #     KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+  #     KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+  #     KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+  #     KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+  #     KAFKA_PROCESS_ROLES: broker,controller
+  #     KAFKA_NODE_ID: 1
+  #     KAFKA_CONTROLLER_QUORUM_VOTERS: 1@broker:29093
+  #     KAFKA_LISTENERS: PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092
+  #     KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+  #     KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+  #     KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+  #     CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+  postgres:
+    image: postgres:14
+    container_name: postgres_local
+    command: postgres -c 'max_connections=500' -c 'shared_buffers=1GB' #-c 'idle_session_timeout=18000ms'
     ports:
-      - "9092:9092"
+      - 5437:5432
     environment:
-      KAFKA_BROKER_ID: 1
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://broker:29092,PLAINTEXT_HOST://localhost:9092
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
-      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
-      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
-      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
-      KAFKA_PROCESS_ROLES: broker,controller
-      KAFKA_NODE_ID: 1
-      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@broker:29093
-      KAFKA_LISTENERS: PLAINTEXT://broker:29092,CONTROLLER://broker:29093,PLAINTEXT_HOST://0.0.0.0:9092
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
-      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
-      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      - POSTGRES_USER=postgres_local
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres_local
