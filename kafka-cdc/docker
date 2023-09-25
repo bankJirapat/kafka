@@ -1,0 +1,9 @@
+docker compose down -v
+
+sleep 5
+
+docker compose up -d
+
+sleep
+
+docker ps
